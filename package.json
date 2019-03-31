@@ -1,0 +1,15 @@
+{
+  "name": "discord-christmas-countdown",
+  "version": "0.1.0",
+  "description": "Edits a channel in your discord group with the current days until christmas",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^11.4.2",
+    "node-schedule": "^1.3.2"
+  }
+}
