@@ -1,19 +1,22 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const schedule = require('node-schedule');
+var d = new Date();
 
 var rule = new schedule.RecurrenceRule();
 rule.hour = 0;
+rule.minute = 0;
+rule.second = 10;
 
 var j = schedule.scheduleJob(rule, () => {
-  console.log("Starting job");
+  console.log("Starting job at " + d.getHours().toString().padStart("2","0") + ":" + d.getMinutes().toString().padStart("2","0"));
   getGuilds();
 });
 
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}!`);
-
+  console.log(`Logged in as ${client.user.tag}! at `+ d.getHours().toString().padStart("2","0") + ":" + d.getMinutes().toString().padStart("2","0"));
+  getGuilds();
 });
 
 
