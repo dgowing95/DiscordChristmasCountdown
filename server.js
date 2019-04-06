@@ -19,10 +19,7 @@ client.on('ready', () => {
 client.login(token);
 
 function getGuilds() {
-  //Returns the collection of all guilds(servers) that are using this bot.
-  //Loop through them one at a time
-  let guilds = client.guilds;
-  guilds.forEach( (guild) => {
+  client.guilds.forEach( (guild) => {
     if (guild.available){
       searchChannels(guild);
     }
@@ -33,8 +30,8 @@ function getGuilds() {
 function searchChannels(guild){
   let channels = guild.channels;
   channels.forEach( (channel) => {
-    if (channel.name == "christmas" || channel.name.includes("christmas")){
-      channel.setName(daysUntilChristmas()+" days until christmas") ;
+    if (channel.name.toLowerCase().includes("christmas")){
+      channel.setName(daysUntilChristmas()) ;
     }
   });
 }
@@ -43,18 +40,22 @@ function searchChannels(guild){
 function daysUntilChristmas(){
   let christmas = new Date(date.getFullYear(), 11,25);
 
-  // If today is christmas, ITS CHRISTMAS
+  //Today is Christmas
   if (date.getMonth()==11 && date.getDate()==25)
   {
-  return 0;
+    return "Today is Christmas!"
   }
-  //If its between 25th-31st dec, we need next years christmas.
+  //If its between 25th-31st dec, we need next years Christmas.
   if (date.getMonth()==11 && date.getDate()>25)
   {
   christmas.setFullYear(cmas.getFullYear()+1);
   }
-
+  //Calculate days until Christmas
   let one_day=1000*60*60*24;
-  let days = Math.ceil((christmas.getTime()-date.getTime())/(one_day));
-  return days;
+  let daysUntilChristmas = Math.ceil((christmas.getTime()-date.getTime())/(one_day));
+  if (daysUntilChristmas > 1) {
+    return daysUntilChristmas + " days until Christmas";
+  }else {
+    return daysUntilChristmas + " day until Christmas";
+  }
 }
