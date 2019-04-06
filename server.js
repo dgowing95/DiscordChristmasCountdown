@@ -1,26 +1,22 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 const schedule = require('node-schedule');
-var d = new Date();
+const {token} = require("./settings.json");
+var date = new Date();
 
-var rule = new schedule.RecurrenceRule();
-rule.hour = 0;
-rule.minute = 0;
-rule.second = 10;
-
-var j = schedule.scheduleJob(rule, () => {
-  console.log("Starting job at " + d.getHours().toString().padStart("2","0") + ":" + d.getMinutes().toString().padStart("2","0"));
+schedule.scheduleJob('0 0 * * *', () => {
+  console.log("Starting job at " + date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
 });
 
 
 client.on('ready', () => {
-  console.log(`Logged in as ${client.user.tag}! at `+ d.getHours().toString().padStart("2","0") + ":" + d.getMinutes().toString().padStart("2","0"));
+  console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
 });
 
 
-client.login('NTYxOTAwMTY0MjQwMTEzNjc1.XKC8xg.N1Bbw9GS6ZfMmYSAouJ2TwgfpxM');
+client.login(token);
 
 function getGuilds() {
   //Returns the collection of all guilds(servers) that are using this bot.
@@ -35,7 +31,6 @@ function getGuilds() {
 
 //Search the channels of each guild for a christmas one
 function searchChannels(guild){
-  let date = new Date();
   let channels = guild.channels;
   channels.forEach( (channel) => {
     if (channel.name == "christmas" || channel.name.includes("christmas")){
@@ -46,7 +41,6 @@ function searchChannels(guild){
 
 //returns num of days until christmas
 function daysUntilChristmas(){
-  let date = new Date();
   let christmas = new Date(date.getFullYear(), 11,25);
 
   // If today is christmas, ITS CHRISTMAS
