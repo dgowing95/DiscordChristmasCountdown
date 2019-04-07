@@ -9,6 +9,7 @@ schedule.scheduleJob('0 0 * * *', () => {
   getGuilds();
 });
 
+client.on('error', console.error);
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
