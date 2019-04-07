@@ -4,7 +4,7 @@ const schedule = require('node-schedule');
 const {token} = require("./settings.json");
 var date = new Date();
 
-schedule.scheduleJob('0 0 * * *', () => {
+schedule.scheduleJob('1 0 * * *', () => {
   console.log("Starting job at " + date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
 });
