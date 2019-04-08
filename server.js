@@ -2,9 +2,10 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 var cron = require('node-cron');
 const {token} = require("./settings.json");
-var date = new Date();
+
 
 cron.schedule('0 1 * * *', () => {
+  let date = new Date();
   console.log("Starting job at " + date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
 }, {
@@ -17,6 +18,7 @@ client.on('error', (err) => {
 });
 
 client.on('ready', () => {
+  let date = new Date();
   console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
 });
@@ -44,6 +46,7 @@ function searchChannels(guild){
 
 //returns num of days until christmas
 function daysUntilChristmas(){
+  let date = new Date();
   let christmas = new Date(date.getFullYear(), 11,25);
 
   //Today is Christmas
