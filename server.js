@@ -1,15 +1,20 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const schedule = require('node-schedule');
+var cron = require('node-cron');
 const {token} = require("./settings.json");
 var date = new Date();
 
-schedule.scheduleJob('1 0 * * *', () => {
+cron.schedule('0 1 * * *', () => {
   console.log("Starting job at " + date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
+}, {
+  scheduled: true,
+  timezone: "Europe/London"
 });
 
-client.on('error', console.error);
+client.on('error', (err) => {
+  console.log(err);
+});
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
