@@ -57,7 +57,7 @@ function daysUntilChristmas(){
   //If its between 25th-31st dec, we need next years Christmas.
   if (date.getMonth()==11 && date.getDate()>25)
   {
-  christmas.setFullYear(cmas.getFullYear()+1);
+  christmas.setFullYear(christmas.getFullYear()+1);
   }
   //Calculate days until Christmas
   let one_day=1000*60*60*24;
