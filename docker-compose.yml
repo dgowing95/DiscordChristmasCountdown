@@ -1,0 +1,12 @@
+version: '2'
+
+services:
+    node: 
+        image: "node:13.8"
+        user: "node"
+        working_dir: /home/app
+        environment: 
+            - NODE_ENV=production
+        volumes:
+            -  .:/home/app
+        command: "npm start"
