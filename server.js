@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 var cron = require('node-cron');
-const {token} = require("./settings.json");
+const token = process.env.TOKEN;
 
 
 cron.schedule('0 1 * * *', () => {
