@@ -1,0 +1,51 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-west-2
+
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Pull Code
+        uses: actions/checkout@v2
+      
+      - name: Build, tag and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $ECR_REGISTRY/xmasbot:$IMAGE_TAG .
+          docker push $ECR_REGISTRY/xmasbot:$IMAGE_TAG
+      - name: Update ECS Task Definition
+        id: render-countdown-container
+        uses: aws-actions/amazon-ecs-render-task-definition@v1
+        with:
+          task-definition: task-definition.json
+          container-name: xmasbot
+          image: 688621974378.dkr.ecr.eu-west-2.amazonaws.com/xmasbot:${{ github.sha }}
+
+      - name: Preview deployment json
+        run: |
+          sudo cat ${{ steps.render-countdown-container.outputs.task-definition }}
+      - name: Deploy new Task Definition to Amazon ECS
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: ${{ steps.render-countdown-container.outputs.task-definition}}
+          service: xmas-bot-service
+          cluster: expression
+      
+      - name: Update Service and Force New Deployment
+        run: aws ecs update-service --cluster expression --service xmas-bot-service --force-new-deployment --region eu-west-2
