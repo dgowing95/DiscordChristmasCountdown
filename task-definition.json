@@ -1,0 +1,33 @@
+{
+    "requiresCompatibilities": [
+      "FARGATE"
+    ],
+    "executionRoleArn": "arn:aws:iam::688621974378:role/ecsTaskExecutionRole",
+    "containerDefinitions": [
+      {
+        "name": "xmas-bot",
+        "memory": 512,
+        "cpu": 256,
+        "essential": true,
+        "secrets": [
+            {
+                "name": "TOKEN",
+                "valueFrom": "arn:aws:ssm:eu-west-2:688621974378:parameter/XMAS_TOKEN"
+            }
+        ],
+        "logConfiguration": {
+            "logDriver": "awslogs",
+            "options": {
+                "awslogs-group": "ecs-logs",
+                "awslogs-region": "eu-west-2",
+                "awslogs-stream-prefix": "xmas-bot"
+            }
+        }
+      }
+    ],
+    "networkMode": "awsvpc",
+    "placementConstraints": [],
+    "family": "countdown-bot",
+    "memory": "512",
+    "cpu": "256"
+  }
