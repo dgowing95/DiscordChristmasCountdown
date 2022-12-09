@@ -12,7 +12,7 @@ client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
   setTimeout(()=> {
-    process.exit(1);
+    process.exit(0);
   }, 10000)
 });
 

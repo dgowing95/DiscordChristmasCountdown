@@ -1,8 +1,8 @@
 name: Build & Deploy
 
 on:
-  push:
-    branches: [ master ]
+  schedule:
+    - cron: '0 0 * * *'
 
 jobs:
   run:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Pull Code
         uses: actions/checkout@v2
-            
+
       - name: Run Application
         run: node server.js
         env:
