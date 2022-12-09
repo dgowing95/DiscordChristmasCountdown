@@ -1,0 +1,14 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  Deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run Application
+        run: node server.js
+        env:
+          TOKEN: ${{ secrets.TOKEN }}

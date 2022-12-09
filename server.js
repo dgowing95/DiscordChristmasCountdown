@@ -1,17 +1,7 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-var cron = require('node-cron');
 const token = process.env.TOKEN;
 
-
-cron.schedule('0 1 * * *', () => {
-  let date = new Date();
-  console.log("Starting job at " + date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
-  getGuilds();
-}, {
-  scheduled: true,
-  timezone: "Europe/London"
-});
 
 client.on('error', (err) => {
   console.log(err);
@@ -21,6 +11,9 @@ client.on('ready', () => {
   let date = new Date();
   console.log(`Logged in as ${client.user.tag}! at `+ date.getHours().toString().padStart("2","0") + ":" + date.getMinutes().toString().padStart("2","0"));
   getGuilds();
+  setTimeout(()=> {
+    process.exit(1);
+  }, 10000)
 });
 
 
@@ -40,6 +33,7 @@ function searchChannels(guild){
   channels.forEach( (channel) => {
     if (channel.name.toLowerCase().includes("christmas")){
       channel.setName(daysUntilChristmas()) ;
+      console.log("Updating ", channel.name.toLowerCase(), " in ", guild.name);
     }
   });
 }
