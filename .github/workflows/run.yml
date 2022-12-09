@@ -5,9 +5,12 @@ on:
     branches: [ master ]
 
 jobs:
-  Deploy:
+  run:
     runs-on: ubuntu-latest
     steps:
+      - name: Pull Code
+        uses: actions/checkout@v2
+            
       - name: Run Application
         run: node server.js
         env:
