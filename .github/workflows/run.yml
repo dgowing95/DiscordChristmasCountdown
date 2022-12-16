@@ -2,7 +2,7 @@ name: Build & Deploy
 
 on:
   schedule:
-    - cron: '0 23 * * *'
+    - cron: '0 0 * * *'
 
 jobs:
   run:
